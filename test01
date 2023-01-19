@@ -61,17 +61,15 @@ let
     #"변경된 유형1" = Table.TransformColumnTypes(#"제거된 중복 항목 수",{{"Index_sort_order", Int64.Type}}),
     #"정렬된 행 수" = Table.Sort(#"변경된 유형1",{{"Index_sort_order", Order.Ascending}}),
     #"중복된 열1" = Table.DuplicateColumn(#"정렬된 행 수", "ItemGroup", "ItemGroup - 복사"),
-    #"이름을 바꾼 열 수3" = Table.RenameColumns(#"중복된 열1",{{"ItemGroup - 복사", "ItemGroupSort"}}),
-    #"바꾼 값48" = Table.ReplaceValue(#"이름을 바꾼 열 수3","유가","1",Replacer.ReplaceText,{"ItemGroupSort"}),
-    #"바꾼 값49" = Table.ReplaceValue(#"바꾼 값48","환율","2",Replacer.ReplaceText,{"ItemGroupSort"}),
-    #"바꾼 값50" = Table.ReplaceValue(#"바꾼 값49","경제성장률","3",Replacer.ReplaceText,{"ItemGroupSort"}),
-    #"바꾼 값51" = Table.ReplaceValue(#"바꾼 값50","기준금리","4",Replacer.ReplaceText,{"ItemGroupSort"}),
-    #"바꾼 값52" = Table.ReplaceValue(#"바꾼 값51","물류","5",Replacer.ReplaceText,{"ItemGroupSort"}),
-    #"바꾼 값53" = Table.ReplaceValue(#"바꾼 값52","국내소비자","6",Replacer.ReplaceText,{"ItemGroupSort"}),
-    #"바꾼 값54" = Table.ReplaceValue(#"바꾼 값53","APT착공실적","7",Replacer.ReplaceText,{"ItemGroupSort"}),
-    #"변경된 유형2" = Table.TransformColumnTypes(#"바꾼 값54",{{"ItemGroupSort", Int64.Type}}),
-    #"Appended Query" = Table.Combine({#"변경된 유형2", Dim_Indicator_Insert}),
-    #"Removed Errors" = Table.RemoveRowsWithErrors(#"Appended Query"),
-    #"Replaced Value" = Table.ReplaceValue(#"Removed Errors","경제성장률 (%)","한국 경제성장률 (%)",Replacer.ReplaceText,{"ItemName_Change"})
+    #"바꾼 값48" = Table.ReplaceValue(#"중복된 열1","유가","1",Replacer.ReplaceText,{"ItemGroup - 복사"}),
+    #"바꾼 값49" = Table.ReplaceValue(#"바꾼 값48","환율","2",Replacer.ReplaceText,{"ItemGroup - 복사"}),
+    #"바꾼 값50" = Table.ReplaceValue(#"바꾼 값49","경제성장률","3",Replacer.ReplaceText,{"ItemGroup - 복사"}),
+    #"바꾼 값51" = Table.ReplaceValue(#"바꾼 값50","기준금리","4",Replacer.ReplaceText,{"ItemGroup - 복사"}),
+    #"바꾼 값52" = Table.ReplaceValue(#"바꾼 값51","물류","5",Replacer.ReplaceText,{"ItemGroup - 복사"}),
+    #"바꾼 값53" = Table.ReplaceValue(#"바꾼 값52","국내소비자","6",Replacer.ReplaceText,{"ItemGroup - 복사"}),
+    #"바꾼 값54" = Table.ReplaceValue(#"바꾼 값53","APT착공실적","7",Replacer.ReplaceText,{"ItemGroup - 복사"}),
+    #"이름을 바꾼 열 수3" = Table.RenameColumns(#"바꾼 값54",{{"ItemGroup - 복사", "ItemGroupSort"}}),
+    #"Replaced Value" = Table.ReplaceValue(#"이름을 바꾼 열 수3","경제성장률 (%)","한국 경제성장률 (%)",Replacer.ReplaceText,{"ItemName_Change"}),
+    #"Appended Query" = Table.Combine({#"Replaced Value", Dim_Indicator_InsertToChange1})
 in
-    #"Replaced Value"
+    #"Appended Query"
